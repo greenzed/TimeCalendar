@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="utf-8">
+	<title>DigiClock</title>
+	<meta name="author" content="developer">
+	<meta name="description" content="Digital watch">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline';">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+	<link rel="icon" type="image/x-icon" href=""/>
+    <title>Watch</title>
+<style>
+@font-face {
+  font-family: "Bruce Forever";
+  src: url("Bruce Forever.ttf");
+}
+
+    #app {
+        text-align: center;
+        background-color: black;
+        color: green;
+        width: 100%;
+        
+    }
+    #TimeLayer {
+        font-family: Arial, "Bruce Forever" ;
+        font-size: 4em;
+    }
+    
+   @media screen and (min-width: 900px) {
+       span { font-size: 3em}
+       
+      
+       
+    } 
+    #DateLayer {
+        font-weight: bold;
+    }
+    
+    .centerBlock {
+        
+        margin: 0 auto;
+        
+    }    
+    
+    table {
+        
+        font-size: 1em;
+        border: 1px;
+        border-color: red;
+        border-style: double;
+    }
+    td {
+         border: 1px;
+        border-color: red;
+        border-style: double;
+    }
+    
+    
+    .ctd span {
+        background-color: greenyellow;
+        
+    }
+    
+</style>
+    </head>
+
+<body>
+	<div id="app">
+    <div id="TimeLayer"><span id="time_span">-</span></div>
+    <div id="DateLayer"><span id="date_span">-</span></div>
+    
+    <table id="calendar" class="centerBlock">
+    <caption id="calCaption">Календарь: </caption>
+    <tr>
+    <th>Пн</th><th>Вт</th><th>Ср</th><th>Чт</th><th>Пт</th><th>Сб</th><th>Вс</th>
+    </tr>
+        
+    </table>    
+    </div>
+    <script>
+        function getLastDayOfMonth(year, month) {
+  // Months are zero-based in JavaScript, so we subtract 1 from the input month.
+  const lastDay = new Date(year, month + 1, 0).getDate();
+  return lastDay;
+}
+  function getCurrentDate() {
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, "0"); // Pad single-digit day with leading zero if needed
+  const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are zero-based, so we add 1 to get the correct month
+  const year = now.getFullYear();
+
+  return `${day}:${month}:${year}`;
+}
+function getCurrentTime() {
+  const now = new Date();
+  const hours = String(now.getHours()).padStart(2, "0"); // Pad single-digit hours with leading zero if needed
+  const minutes = String(now.getMinutes()).padStart(2, "0"); // Pad single-digit minutes with leading zero if needed
+  const seconds = String(now.getSeconds()).padStart(2, "0"); // Pad single-digit seconds with leading zero if needed
+
+  let time_str =  `${hours}:${minutes}:${seconds}`;
+    document.getElementById("time_span").innerHTML = time_str ;
+    document.getElementById("date_span").innerHTML = getCurrentDate() ;
+}
+     
+      
+      
+        
+    const arr_month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь','Ноябрь','Декабрь'];
+    const daysOfWeek = ["Вс","Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+    let tbl = document.getElementById("calendar");
+    var current_date = new Date();
+    let curr_month =  current_date.getMonth();
+    const curr_chislo = current_date.getDate();    
+    let calCaption = document.getElementById("calCaption") ;
+    calCaption.innerHTML = calCaption.innerHTML + arr_month[curr_month];   
+    let currYear = current_date.getFullYear(); 
+    let monthFirstDay = new Date(currYear,curr_month,1);
+    const lastDay = getLastDayOfMonth(currYear, curr_month);
+    let dayOfWeek = monthFirstDay.getDay();    
+    
+    
+    function checkDate () {
+            
+    let nowdate = new Date();
+              
+     if  (nowdate >current_date ) {
+              
+     const table = document.getElementById("calendar");
+     if (table.rows.length >1) {
+        table.deleteRow(6);
+        table.deleteRow(5);     
+        table.deleteRow(4);
+         table.deleteRow(3);
+         table.deleteRow(2);
+         table.deleteRow(1);
+         
+     }    
+              
+              
+              
+    let newrow = tbl.insertRow(1);
+    newrow.innerHTML = '<td id="d1"></td><td id="d2"></td><td id="d3"></td><td id="d4"></td><td id="d5"></td><td id="d6"></td><td id="d7"></td>' ;
+    newrow = tbl.insertRow(2);
+    newrow.innerHTML = '<td id="d8"></td><td id="d9"></td><td id="d10"></td><td id="d11"></td><td id="d12"></td><td id="d13"></td><td id="d14"></td>' ;
+    newrow = tbl.insertRow(3);
+    newrow.innerHTML = '<td id="d15"></td><td id="d16"></td><td id="d17"></td><td id="d18"></td><td id="d19"></td><td id="d20"></td><td id="d21"></td>' ;
+    newrow = tbl.insertRow(4);
+    newrow.innerHTML = '<td id="d22"></td><td id="d23"></td><td id="d24"></td><td id="d25"></td><td id="d26"></td><td id="d27"></td><td id="d28"></td>' ;
+
+    newrow = tbl.insertRow(5);
+    newrow.innerHTML = '<td id="d29"></td><td id="d30"></td><td id="d31"></td><td id="d32"></td><td id="d33"></td><td id="d34"></td><td id="d35"></td>' ;
+        
+    newrow = tbl.insertRow(6);
+    newrow.innerHTML = '<td id="d36"></td><td id="d37"></td><td id="d38"></td><td id="d39"></td><td id="d40"></td><td id="d41"></td><td id="d42"></td>' ;    
+    
+    let dayIterator = monthFirstDay.getDate();
+    let shiftedIndex =  0 ;
+    if (dayOfWeek == 0) { shiftedIndex = "d" + 6 } else {shiftedIndex = "d" + dayOfWeek};   
+    
+       
+     let shift_value = 0;   
+    switch ( dayOfWeek){
+            case 0 :  shift_value = 6; break;
+            case 1 :  shift_value = 0; break;   
+            case 2 :  shift_value = 1; break;   
+            case 3 :  shift_value = 2; break;   
+            case 4 :  shift_value = 3; break;   
+            case 5 :  shift_value = 4; break;   
+            case 6 :  shift_value = 5; break;   
+    }     
+        while (dayIterator<=lastDay) {
+    
+            // нужно прибавить сдвиг, который равен номеру дня по российской системе для 1 числа месяца
+            shiftedIndex = "d" + (dayIterator + shift_value);
+            let d_element = document.getElementById(shiftedIndex) ;
+            
+            d_element.innerHTML = `<span>${dayIterator}</span> `;
+            
+            if (dayIterator == curr_chislo) { d_element.classList.add("ctd"); }
+            dayIterator++;
+        
+    };       
+              
+              
+          };
+            
+            
+        };
+    
+    
+    
+    
+  
+        
+        // select current day
+        
+    const sid   =    setInterval(getCurrentTime, 1000);
+    const sid2  =    setInterval(checkDate, 1000);   
+    
+    </script>
+        
+</body>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</html>

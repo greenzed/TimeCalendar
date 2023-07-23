@@ -1,0 +1,1 @@
+cordova build android --release -- --keystore=TimeCalendar.keystore --storePassword=  --alias=timecalendar --password= --packageType=bundle
